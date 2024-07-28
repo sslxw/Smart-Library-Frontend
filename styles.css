@@ -1,0 +1,22 @@
+.container {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    overflow-y: auto; /* enabling vertical scrolling */
+    height: 100vh; 
+    box-sizing: border-box;
+    overflow-x: hidden; /* no horizontal overflow */
+}
+
+.search-bar {
+    width: 100%;
+    margin-bottom: 40px; 
+    padding: 0 20px;
+}
+
+.search-bar input[type="text"] {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
