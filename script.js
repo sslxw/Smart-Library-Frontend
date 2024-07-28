@@ -15,7 +15,7 @@ async function fetchBooks(page, pageSize) {
             throw new Error('Failed to fetch books');
         }
         const books = await response.json();
-        console.log('Books fetched:', books); // Log fetched books
+        console.log('Books fetched:', books); // log fetched books
         displayBooks(books);
         updatePaginationButtons(books.length, pageSize);
     } catch (error) {
@@ -26,7 +26,7 @@ async function fetchBooks(page, pageSize) {
 function displayBooks(books) {
     bookGrid.innerHTML = '';
     books.forEach((book, index) => {
-        console.log('Book cover URL:', book.cover_url); // Log cover URL
+        console.log('Book cover URL:', book.cover); // log the url for testing
         const bookCard = document.createElement('div');
         bookCard.className = 'book';
         bookCard.style.backgroundColor = colors[index % colors.length];
@@ -60,5 +60,5 @@ nextButton.addEventListener('click', () => {
     fetchBooks(currentPage, pageSize);
 });
 
-// Fetch initial set of books
+// fetching intial books
 fetchBooks(currentPage, pageSize);
