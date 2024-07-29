@@ -17,7 +17,7 @@ async function fetchBooks(page, pageSize, query = '', append = false) {
     isLoading = true;
     loadingSpinner.classList.remove('hidden');
     try {
-        // Simulating delay for demonstration purposes
+        // simulating delay
         await new Promise(resolve => setTimeout(resolve, 1000));
         
         const response = await fetch(`http://localhost:8000/books?page=${page}&page_size=${pageSize}&query=${query}`);
@@ -28,7 +28,7 @@ async function fetchBooks(page, pageSize, query = '', append = false) {
         isEndOfList = books.length < pageSize;
         console.log('Books fetched:', books);
         if (!append) {
-            bookGrid.innerHTML = ''; // Clear the grid before displaying new books
+            bookGrid.innerHTML = ''; 
         }
         displayBooks(books);
         updatePaginationButtons();

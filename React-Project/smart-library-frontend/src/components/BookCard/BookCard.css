@@ -1,16 +1,14 @@
-/* BookCard.css */
-
 .book-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 20px; /* Added gap for consistent spacing */
+    gap: 20px; 
     padding: 0 20px;
 }
 
 .book-card {
     perspective: 1000px;
-    width: calc(25% - 20px); /* Adjust width for four books per row */
+    width: calc(25% - 20px); 
     margin: 20px 0;
     box-sizing: border-box;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -75,6 +73,6 @@
 
 @media (max-width: 768px) {
     .book-card {
-        width: calc(50% - 20px); /* Adjust width for two books per row on mobile */
+        width: calc(50% - 20px); 
     }
 }

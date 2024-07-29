@@ -1,5 +1,3 @@
-// BookCard.jsx
-
 import React from 'react';
 import './BookCard.css';
 
