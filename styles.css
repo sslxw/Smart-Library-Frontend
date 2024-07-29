@@ -20,3 +20,175 @@
     font-size: 16px;
     box-sizing: border-box;
 }
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* no horizontal overflow */
+}
+
+.navbar {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo-title {
+    display: flex;
+    align-items: center;
+}
+
+.navbar a {
+    color: black;
+    text-decoration: none;
+    padding: 0 10px;
+    font-size: 20px;
+}
+
+.navbar img {
+    height: 80px;
+    margin-right: 10px;
+}
+
+.divider {
+    height: 1px;
+    background-color: #ddd;
+    margin: 20px 0;
+}
+
+h1 {
+    margin-bottom: 30px; 
+}
+
+.book-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px; /* for spacing between books */
+    padding: 0 20px; /* padding to align with the search bar */
+}
+
+.book {
+    perspective: 1000px;
+    width: calc(23% - 40px); /* this is so we can ensure four books per line with smaller size */
+    margin: 20px 0;
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+    transition: box-shadow 0.3s ease-in-out; /* Transition for shadow */
+}
+
+.book:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Slightly larger shadow on hover */
+}
+
+.book-inner {
+    position: relative;
+    width: 100%;
+    height: 400px; /* fixed height to prevent overlap */
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.book:hover .book-inner {
+    transform: rotateY(180deg);
+}
+
+.book-front, .book-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.book-front {
+    background-color: #fff;
+}
+
+.book-back {
+    background-color: #f8f8f8;
+    transform: rotateY(180deg);
+}
+
+.book img {
+    max-width: 100%;
+    height: 260px; /* fixed height for images */
+    display: block;
+    margin: 0 auto;
+    object-fit: cover; /* ensuring the image covers the entire area without distortion */
+}
+
+.book-title {
+    margin-top: 15px; 
+    font-size: 16px;
+}
+
+.book-rating {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #FFD700; /* Gold color for the stars */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+
+.pagination button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+#loading-spinner {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    margin: 20px auto; /* Center it horizontally and add some space above it */
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+    .pagination {
+        display: none; /* Hide pagination on mobile */
+    }
+
+    .book {
+        width: calc(48% - 40px); /* Adjust width for two books per row on mobile */
+    }
+}
+
+@media (min-width: 769px) {
+    #loading-spinner {
+        display: none; /* Hide loading spinner on desktop */
+    }
+}
