@@ -17,10 +17,15 @@ const ProfileDropdown: React.FC = () => {
   const handleLogoutClick = () => {
     logout();
     navigate('/');
+    window.location.reload();
   };
 
   const handleAdminPageClick = () => {
     navigate('/admin');
+  };
+
+  const handleProfileClick = () => {
+    navigate('/profile');
   };
 
   if (!user) {
@@ -42,6 +47,9 @@ const ProfileDropdown: React.FC = () => {
     return (
       <div className="absolute w-32 md:w-20 sm:w-15 bg-[#172242] rounded-lg flex flex-col justify-start items-start gap-2 z-10 shadow-lg font-['Work Sans']">
         <div className="flex flex-col w-full bg-[#172242] border border-[#172242] rounded-lg">
+          <div className="w-full px-3 py-2" onClick={handleProfileClick}>
+            <div className="text-white text-sm font-normal leading-tight tracking-tight cursor-pointer">Profile</div>
+          </div>
           <div className="w-full px-3 py-2" onClick={handleAdminPageClick}>
             <div className="text-white text-sm font-normal leading-tight tracking-tight cursor-pointer">Admin</div>
           </div>
@@ -56,6 +64,9 @@ const ProfileDropdown: React.FC = () => {
   return (
     <div className="absolute w-32 md:w-20 sm:w-24 bg-[#172242] rounded-lg flex flex-col justify-start items-start gap-2 z-10 shadow-lg font-['Work Sans']">
       <div className="flex flex-col w-full bg-[#172242] border border-[#172242] rounded-lg">
+        <div className="w-full px-3 py-2" onClick={handleProfileClick}>
+          <div className="text-white text-sm font-normal leading-tight tracking-tight cursor-pointer">Profile</div>
+        </div>
         <div className="w-full px-3 py-2" onClick={handleLogoutClick}>
           <div className="text-red-500 text-sm font-normal leading-tight tracking-tight cursor-pointer">Sign Out</div>
         </div>

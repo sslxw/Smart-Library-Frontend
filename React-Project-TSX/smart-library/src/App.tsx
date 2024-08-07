@@ -1,28 +1,25 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import BrowsingPage from "./pages/BrowsingPage";
 import LoginPage from "./pages/LoginPage";
-import SignUp from "./pages/SignUpPage"
+import SignUp from "./pages/SignUpPage";
 import AuthContext, { AuthProvider } from './handlers/AuthContext';
 import AdminPage from './pages/AdminPage';
+import ProfilePage from './pages/ProfilePage'; // Import the ProfilePage
 import { useContext } from 'react';
-import { HeartedBooksProvider } from './handlers/HeartContext';
-
-
 
 const App: React.FC = () => {
   return (
-  <AuthProvider>
-    <HeartedBooksProvider>
-    <Router>
-      <Routes>
-      <Route path="/" element={<BrowsingPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={<SignUp/>} />
-      <Route path="/admin" element={<AdminRoute />} />
-      </Routes>
-    </Router>
-    </HeartedBooksProvider>
-  </AuthProvider>
+    <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<BrowsingPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/admin" element={<AdminRoute />} />
+            <Route path="/profile" element={<ProfilePage />} /> 
+          </Routes>
+        </Router>
+    </AuthProvider>
   );
 }
 

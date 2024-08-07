@@ -11,6 +11,7 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState([
     "Hello, I am the AI ChatBot! I’m here to help you with anything you’re looking for. Please provide your descriptions below and I’ll show the relative content."
   ]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSendMessage = async () => {
     if (inputValue.trim() === '') return;
@@ -18,6 +19,7 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose }) => {
     const userMessage = inputValue;
     setMessages((prevMessages) => [...prevMessages, `You: ${userMessage}`]);
     setInputValue('');
+    setIsLoading(true);
 
     try {
       const botResponse = await sendMessageToChatbot(userMessage);
@@ -25,6 +27,8 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose }) => {
     } catch (error) {
       setMessages((prevMessages) => [...prevMessages, `Bot: Sorry, something went wrong.`]);
       console.error('Error sending message:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -70,6 +74,15 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose }) => {
               </div>
             </div>
           ))}
+          {isLoading && (
+            <div className="flex justify-center items-center h-20">
+              <div className="dots">
+                <div className="dot"></div>
+                <div className="dot"></div>
+                <div className="dot"></div>
+              </div>
+            </div>
+          )}
         </div>
         <div className="flex items-center space-x-2">
           <input
