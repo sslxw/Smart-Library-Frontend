@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 interface ChatModalProps {
   isOpen: boolean;
@@ -9,41 +8,47 @@ interface ChatModalProps {
 const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose }) => {
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState([
-    "Hello, I am the AI ChatBot! I’m here to help you with anything you’re looking for. Please provide your descriptions below and I’ll show the relative content."
+    "Bot: Hello, I am the AI ChatBot! I’m here to help you with anything you’re looking for. Please provide your descriptions below and I’ll show the relative content."
   ]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = () => {
     if (inputValue.trim() === '') return;
 
     const userMessage = inputValue;
-    setMessages((prevMessages) => [...prevMessages, `You: ${userMessage}`]);
+    setMessages((prevMessages) => [...prevMessages, `You: ${userMessage}`, "Bot: "]);
     setInputValue('');
     setIsLoading(true);
 
-    try {
-      const botResponse = await sendMessageToChatbot(userMessage);
-      setMessages((prevMessages) => [...prevMessages, `Bot: ${botResponse}`]);
-    } catch (error) {
-      setMessages((prevMessages) => [...prevMessages, `Bot: Sorry, something went wrong.`]);
-      console.error('Error sending message:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    const eventSource = new EventSource(`http://localhost:8001/chat?query=${encodeURIComponent(userMessage)}`);
 
-  const sendMessageToChatbot = async (message: string) => {
-    try {
-      const response = await axios.post('http://localhost:8001/chat', { query: message }, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching chatbot response:', error);
-      return 'Error';
-    }
+    eventSource.onmessage = (event) => {
+      const chunk = event.data;
+      console.log("Received chunk:", chunk);
+
+      if (chunk && chunk !== 'end') {
+        setMessages((prevMessages) => {
+          const newMessages = [...prevMessages];
+          newMessages[newMessages.length - 1] += chunk;
+          return newMessages;
+        });
+      } else if (chunk === 'end') {
+        setIsLoading(false);
+        eventSource.close();  
+      }
+    };
+
+    eventSource.onerror = (event) => {
+      console.error('EventSource error:', event);
+      setIsLoading(false);
+      setMessages((prevMessages) => [...prevMessages, 'Bot: Sorry, there was an error processing your request.']);
+      eventSource.close();  
+    };
+
+    eventSource.addEventListener('close', () => {
+      setIsLoading(false);
+      eventSource.close();
+    });
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -69,7 +74,7 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose }) => {
         <div className="flex-grow bg-[#172242] rounded-lg p-4 overflow-auto mb-3">
           {messages.map((message, index) => (
             <div key={index} className="bg-[#445a9a] rounded-lg p-4 mb-4">
-              <div className="text-white text-lg font-normal font-['Work Sans'] leading-tight tracking-tight">
+              <div className="text-white text-lg font-normal font-['Work Sans'] leading-tight tracking-tight whitespace-pre-wrap break-words">
                 {message}
               </div>
             </div>

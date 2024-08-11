@@ -194,11 +194,11 @@ const AdminPage: React.FC = () => {
       const token = localStorage.getItem('token');
       const bookPayload = {
         title: newBook.title,
-        author_id: parseInt(newBook.authorId, 10),
+        author_id: parseInt(newBook.authorId),
         genre: newBook.genre,
         description: newBook.description,
         average_rating: parseFloat(newBook.average_rating),
-        published_year: parseInt(newBook.published_year, 10),
+        published_year: parseInt(newBook.published_year),
         cover: newBook.cover,
       };
 
@@ -268,11 +268,11 @@ const AdminPage: React.FC = () => {
       const token = localStorage.getItem('token');
       const bookPayload = {
         title: editBook.title,
-        author_id: parseInt(editBook.authorId, 10),
+        author_id: parseInt(editBook.authorId),
         genre: editBook.genre,
         description: editBook.description,
         average_rating: parseFloat(editBook.average_rating),
-        published_year: parseInt(editBook.published_year, 10),
+        published_year: parseInt(editBook.published_year),
         cover: editBook.cover,
       };
 

@@ -9,9 +9,10 @@ interface SearchBarProps {
   onSearch: (query: string) => void;
   onSort: (order: string, type: string) => void; 
   onGetLikedBooks: (showLiked: boolean) => void;
+  onFetchRecommended: () => void;  
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onSort, onGetLikedBooks }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onSort, onGetLikedBooks, onFetchRecommended }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isHeartFilled, setIsHeartFilled] = useState(false);
@@ -68,7 +69,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onSort, onGetLikedBooks
           <img className="w-5 h-5" src={Utils} alt="Utils icon" />
           {isDropdownOpen && (
             <div className="absolute top-full right-40 mt-2">
-              <DropdownMenu onSort={handleSort} />
+              <DropdownMenu onSort={handleSort} onFetchRecommended={onFetchRecommended} />
             </div>
           )}
         </div>

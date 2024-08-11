@@ -17,7 +17,8 @@ interface BookCardProps {
   cover: string;
   average_rating: number;
   description: string;
-  isLiked: boolean; 
+  isLiked: boolean;
+  onLikeToggle: (bookId: number) => void; 
 }
 
 const truncateText = (text: string, maxLength: number) => {
@@ -27,13 +28,13 @@ const truncateText = (text: string, maxLength: number) => {
   return text;
 };
 
-const BookCard: React.FC<BookCardProps> = ({ title, book_id, author_id, published_year, genre, cover, average_rating, description, isLiked }) => {
+const BookCard: React.FC<BookCardProps> = ({ title, book_id, author_id, published_year, genre, cover, average_rating, description, isLiked, onLikeToggle }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [authorName, setAuthorName] = useState<string>('');
-  const [isHeartFilled, setIsHeartFilled] = useState(isLiked); // Initialize with isLiked prop
-  const maxDescriptionLength = 550; 
-  const maxTitleLength = 22; 
-  const maxAuthorNameLength = 20; 
+  const [isHeartFilled, setIsHeartFilled] = useState(isLiked); 
+  const maxDescriptionLength = 550;
+  const maxTitleLength = 22;
+  const maxAuthorNameLength = 20;
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -56,22 +57,10 @@ const BookCard: React.FC<BookCardProps> = ({ title, book_id, author_id, publishe
   const handleHeartClick = async (event: React.MouseEvent) => {
     event.stopPropagation(); // prevents the card flip
     try {
-      if (isHeartFilled) {
-        await axios.delete(`http://localhost:8001/books/unlike/${book_id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-      } else {
-        await axios.post(`http://localhost:8001/books/like/${book_id}`, {}, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-      }
+      await onLikeToggle(book_id);
       setIsHeartFilled(!isHeartFilled);
     } catch (error) {
-      window.alert("You need to login to like a book")
+      window.alert("You need to login to like a book");
     }
   };
 
