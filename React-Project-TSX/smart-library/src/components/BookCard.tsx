@@ -33,7 +33,7 @@ const BookCard: React.FC<BookCardProps> = ({ title, book_id, author_id, publishe
   const [authorName, setAuthorName] = useState<string>('');
   const [isHeartFilled, setIsHeartFilled] = useState(isLiked); 
   const maxDescriptionLength = 550;
-  const maxTitleLength = 22;
+  const maxTitleLength = 20;
   const maxAuthorNameLength = 20;
   const token = localStorage.getItem('token');
 
